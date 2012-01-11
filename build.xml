@@ -1,5 +1,7 @@
 <project name="pathname-bysource-plugin" default="install">
 
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+
 	<!-- Make backups -->
 	<import file="../ant-backup.xml" />
 
