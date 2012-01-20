@@ -19,3 +19,13 @@ class PathnameBySource(PathnamePlugin):
     version = (1, 0, 0)
     # TODO change m_c_version to whatever version has my changes added to it
     minimum_calibre_version = (0, 8, 33)
+
+    # Actual code that constructs the path name
+    def __init__(self, database):
+        self.database = database
+
+    def construct_path_name(self, book_id):
+        print("PathnameBySource: Me is %s" % PathnameBySource.__name__)
+        print("PathnameBySource: self: %s" % (self))
+        print("PathnameBySource: db  : %s" % (self.database))
+        print("PathnameBySource: bkid: %s" % (book_id))
