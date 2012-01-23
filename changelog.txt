@@ -1,0 +1,2 @@
+[B]Version 1.0.0[/B] - 23 Jan 2012
+Initial release of Pathname by Source plugin
