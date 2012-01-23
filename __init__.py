@@ -8,8 +8,6 @@ __docformat__ = 'restructuredtext en'
 
 from calibre.customize import PathnamePlugin
 
-from calibre.utils.filenames import ascii_filename
-
 class PathnameBySource(PathnamePlugin):
 
     name = 'Pathname By Source'
@@ -22,10 +20,9 @@ class PathnameBySource(PathnamePlugin):
 
     # Actual code that constructs the path name
     def __init__(self, database):
-        self.database = database
+        from calibre_plugins.pathname_bysource.strategy import PathnameBySourceStrategy
+        self.strategy = PathnameBySourceStrategy(database)
 
+    # Facade for the actual code that constructs the path name
     def construct_path_name(self, book_id):
-        print("PathnameBySource: Me is %s" % PathnameBySource.__name__)
-        print("PathnameBySource: self: %s" % (self))
-        print("PathnameBySource: db  : %s" % (self.database))
-        print("PathnameBySource: bkid: %s" % (book_id))
+        return self.strategy.construct_path_name(book_id)
