@@ -18,6 +18,10 @@ class PathnameBySource(PathnamePlugin):
     # TODO change m_c_version to whatever version has my changes added to it
     minimum_calibre_version = (0, 8, 33)
 
+    # The order in which enabled pathname plugins are evaluated.
+    # TODO make configurable
+    order = 10
+
     # Actual code that constructs the path name
     def __init__(self, database):
         from calibre_plugins.pathname_bysource.strategy import PathnameBySourceStrategy
