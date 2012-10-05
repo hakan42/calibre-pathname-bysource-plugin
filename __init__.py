@@ -11,22 +11,13 @@ from calibre.customize import PathnamePlugin
 class PathnameBySource(PathnamePlugin):
 
     name = 'Pathname By Source'
+    actual_plugin = 'calibre_plugins.pathname_bysource.strategy:PathnameBySourceStrategy'
     description = _('Adds the "source" metadata field into the path')
     supported_platforms = ['windows', 'osx', 'linux']
     author = 'Hakan Tandogan'
     version = (1, 0, 0)
-    # TODO change m_c_version to whatever version has my changes added to it
-    minimum_calibre_version = (0, 8, 33)
+    minimum_calibre_version = (0, 9, 1)
 
     # The order in which enabled pathname plugins are evaluated.
     # TODO make configurable
-    order = 10
-
-    # Actual code that constructs the path name
-    def __init__(self, database):
-        from calibre_plugins.pathname_bysource.strategy import PathnameBySourceStrategy
-        self.strategy = PathnameBySourceStrategy(database)
-
-    # Facade for the actual code that constructs the path name
-    def construct_path_name(self, book_id):
-        return self.strategy.construct_path_name(book_id)
+    order = 20

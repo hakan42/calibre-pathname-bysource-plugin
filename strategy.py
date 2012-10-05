@@ -20,33 +20,38 @@ class PathnameBySourceStrategy(PathnamePlugin):
         # TODO make prefix configurable
         self.source_prefix = _('from')
         self.source_field_name = '#source'
+        # TODO make default source configurable
+        self.default_source = None
 
     def construct_path_name(self, book_id):
-        # print("PathnameBySourceStrategy: Me is %s" % PathnameBySourceStrategy.__name__)
-        # print("PathnameBySourceStrategy: self: %s" % (self))
-        # print("PathnameBySourceStrategy: db  : %s" % (self.database))
-        # print("PathnameBySourceStrategy: bkid: %s" % (book_id))
+        print("  PbSourceS is %s" % (__name__))
+        print("  PbSourceS: self : %s" % (self))
+        print("  PbSourceS: database: %s" % (self.database))
+        print("  PbSourceS: book id : %s" % (book_id))
 
-        path_name_element = None
+        path_element = None
 
         try:
             metadata = self.database.get_metadata(book_id, index_is_id=True)
-            # print("PathnameBySourceStrategy: metadata: '%s'" % (metadata))
+            print("    PbSourceS: metadata: '%s'" % (metadata))
             source = metadata.get(self.source_field_name)
-            print("PathnameBySourceStrategy: metadata.source: '%s'" % (source))
+            print("    PbSourceS: metadata.source: '%s'" % (source))
 
             # Special case for books which have no source set
             if source == None:
-                source = 'unknown'
+                source = self.default_source
 
             if source:
                 source_prefix = self.source_prefix
                 source_prefix = ascii_filename(source_prefix[:self.PATH_LIMIT]).decode(filesystem_encoding, 'ignore')
                 source_name = ascii_filename(source[:self.PATH_LIMIT]).decode(filesystem_encoding, 'ignore')
-                path_name_element = source_prefix + "_" + source_name
+                source_name = source_name.lower()
+                # TODO: use a regex for whitespace, r = re.compile(r"^\s+", re.MULTILINE)
+                source_name = source_name.replace(' ', '_')
+                path_element = source_prefix + "_" + source_name
         except:
             traceback.print_exc()
 
-        print("PathnameBySourceStrategy: path_name_element: '%s'" % (path_name_element))
+        print("      PbSourceS: path_element: '%s'" % (path_element))
 
-        return path_name_element
+        return path_element
